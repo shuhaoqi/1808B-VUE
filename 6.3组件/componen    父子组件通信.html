@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>父子通信</title>
+    <script src="vue.js"></script>
+    <!-- 
+        组件化开发：
+        组件：可以复用的功能界面
+        data:必须是一个函数，每一个组件的必须有它自己的可以单独维护的数据，组件之间的数据不会相互影响
+        ，这个函数必须有返回值，返回值就是我们写的数据
+
+        组件的使用：自定义的html元素，标签代表这个组件
+
+        组件好处:
+        提高开发效率
+        方便重复使用
+        简化调试步骤
+        提升整个项目的可维护性
+        便于协同开发
+
+
+父子组件通信
+    父组件向子组件传值：
+          父组件的自定义元素上使用v-bind动态绑定一个自定义属性，子组件使用props属性接收自定义属性
+
+    props写法：
+    1.字符串数组，里面的字符串就是接收自定义属性名
+    2.对象
+    设置默认值default
+
+     -->
+  </head>
+  <body>
+    <div id="app">
+      <my-component
+        v-bind:mylist="list"
+        v-bind:message="message"
+        v-bind:age="age"
+      ></my-component>
+    </div>
+    <script>
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          list: ['项目一', '项目二', '项目三'],
+          message: '我是标题',
+          age: 20
+        },
+        components: {
+          'my-component': {
+            // props: ['mylist', 'message', 'age'], //字符串类型的数组
+            props: {
+              mylist: Array, //可以指定数据类型
+              // message: String
+              message: {
+                type: String,
+                default: 'hello' //设置默认值
+              }
+            },
+            template: `
+                    <div>
+                        <h3>{{message}}</h3>
+                        <h2>{{age}}</h2>
+                        <ul>
+                            <li v-for="item in mylist">{{item}}</li>
+                        </ul>
+                        <child-component v-bind:list="mylist" v-bind:message="message" v-bind:age="age"></child-component>  
+                    </div>
+                    `,
+            data() {
+              //data必须是一个函数
+              return {}
+            },
+            components: {
+              'child-component': {
+                props: ['list', 'message', 'age'],
+                // props: {
+                //   list: Array,
+                //   message: String
+                // },
+                template: `
+                    <div>
+                       <h3>{{message}}</h3>
+                       <h2>{{age}}</h2>
+                       <ul>
+                          <li v-for="item in list">{{item}}</li>
+                       </ul>
+                    </div>
+                    `,
+                data() {
+                  return {}
+                }
+              }
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>双向数据绑定原理</title>
+    <script src="vue.js"></script>
+    <!-- 
+        Object.defineProperty:给一个对象添加属性或者修改已有属性
+        语法：Object.defineProperty(obj,attr,descriptor)
+        obj:要修改或者添加属性的对象
+        attr:操作的属性
+        descriptor:描述符，配置项
+
+        //数据描述符
+        value:属性值  默认为undefined  ,不能和访问器描述写一起
+        writable:属性是否可以修改，默认为false不可以    true可以
+        enumerable:属性是否可以被遍厉，默认为false不可以   
+        configurable:属性是否可以被删除,默认为false
+
+        //访问器描述符
+        getter:获得属性值的访问器，get
+        setter：监听访问值变化的访问器，set
+
+     -->
+  </head>
+  <body>
+    <script>
+      //   var obj = {
+      // name: 'lili'
+      //   }
+      //   Object.defineProperty(obj, 'age', {
+      //     value: 20,
+      //     writable: true,
+      //     enumerable: true,
+      //     configurable: false
+      //   })
+      //   Object.defineProperty(obj, 'name', {
+      //     value: 'lilei'
+      //   })
+      //   delete obj.age //删除对象的属性
+      //   for (var attr in obj) {
+      //     //遍厉对象，attr为属性名
+      //     console.log(attr)
+      //   }
+      //   console.log(obj)
+
+      var obj = {}
+      var val = ''
+      Object.defineProperty(obj, 'name', {
+        //当获取属性的时候执行
+        get() {
+          console.log('get方法执行了')
+          return val //给返回值作为属性值
+        },
+        //监听属性的变化，发生变化时执行
+        set(value) {
+          //value是修改的新值
+          console.log('你是不是修改了')
+          val = value
+        }
+      })
+      obj.name = 'xiaoming' //修改属性
+      console.log(obj.name) //读取属性
+    </script>
+  </body>
+</html>

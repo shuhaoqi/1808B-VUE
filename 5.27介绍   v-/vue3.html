@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <!-- 
+        指令: v-if： 根据表达式的真假值显示元素，
+              当表达式的值为真时，被渲染出来，
+              当表达式的值为假时，不会被渲染出来
+
+             v-else: v-if的else块，必须跟在v-if后面不能单独使用
+
+             v-show: 是根据表达式的真假值来显示元素.
+                    当表达式的值为真时，被渲染出来，
+                    当表达式的值为假时，不会被渲染出来
+
+             v-if与v-show的区别？
+             v-if是控制元素的添加与删除，Dom操作性能消耗
+             v-show是控制元素的css的display属性
+             频繁切换 v-show
+     -->
+  </head>
+  <body>
+    <div id="app">
+      <p v-if="true">你能看到我吗？？？</p>
+      <p v-if="false">你能看到我吗</p>
+      <p v-if="num>5">hh</p>
+      <p v-else>我是v-if的else块</p>
+      <p v-if="message.indexOf('o')>0">kk</p>
+      <p v-show="true">你能看到我</p>
+      <p v-show="false">你看不到我</p>
+      <p v-show="num>5">jjj</p>
+    </div>
+    <script>
+      //实例化一个vue实例用来启动应用
+      var vm = new Vue({
+        //这个函数接受一个参数是对象，叫做配置对象，配置对象里面的属性叫配置参数
+        el: '#app', //告诉实例管理的区域
+        data: {
+          //存放数据，数据可能有很多，使用是对象里面存键值对
+          message: 'holle',
+          num: 6
+        }
+      })
+    </script>
+  </body>
+</html>

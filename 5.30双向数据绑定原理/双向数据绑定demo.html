@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>数据绑定demo</title>
+    <acript src="vue.js"></acript>
+  </head>
+  <body>
+    <input type="text" id="t1" value="" />
+    <script>
+      var oT = document.getElementById('t1')
+      var obj = {}
+      Object.defineProperty(obj, 'name', {
+        //获取属性的时候执行
+        get() {
+          return val
+        },
+        //监听属性的发生变化时执行
+        set(value) {
+          console.log(value)
+          val = value
+          //数据改变，传给页面
+          oT.value = value
+        }
+      })
+      oT.oninput = function() {
+        //输入框改变时候 数据要改变
+        obj.name = oT.value
+      }
+      console.log(obj)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="todo.css" />
+
+    <script src="vue.js"></script>
+  </head>
+  <body>
+    <div class="page-top">
+      <div class="page-content">
+        <h3>任务计划列表</h3>
+      </div>
+    </div>
+    <div id="main">
+      <h3 class="bg-title">添加任务:</h3>
+      <input
+        type="text"
+        class="task-input"
+        placeholder="例如：吃饭睡觉打豆豆；　提示：回车即可添加任务"
+        @keyup.13="addTask"
+        v-model="taskName"
+      />
+      <ul class="task-list">
+        <li>{{ unfinishNum }}个任务未完成</li>
+        <li class="action">
+          <a href="#all">所有任务</a>
+          <a href="#unfinished">未完成的任务</a>
+          <a href="#finished">完成的任务</a>
+        </li>
+      </ul>
+      <h3 style="margin-bottom: 20px;">任务列表:</h3>
+      <!-- 
+            盛放任务列表的盒子
+         -->
+      <div class="tasks">
+        <span class="no-task-tip" v-show="list.length==0"
+          >还没有添加任何任务</span
+        >
+        <ul class="tasks-list">
+          <li
+            class="tasks-item"
+            v-for="(item,index) in filterList"
+            :class="{editing:index === num}"
+          >
+            <div class="view">
+              <input type="checkbox" class="toggle" v-model="item.isChecked" />
+              <label @dblclick="editTask(index)">{{ item.title }}</label>
+              <button class="delete" @click="deleteTask(index)"></button>
+            </div>
+            <!-- 编辑的输入框 -->
+            <input
+              type="text"
+              class="edit"
+              v-model="item.title"
+              @blur="editTodo"
+              @keyup.enter="editTodo"
+              @keyup.esc="cancel(index)"
+              autofocus
+              v-focus
+            />
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      // const list = [
+      //   { title: '吃饭', isChecked: false },
+      //   { title: '睡觉', isChecked: false }
+      // ]
+      const list = JSON.parse(localStorage.getItem('customList')) || []
+
+      //定义方法获取列表值对应的数据
+      var filter = {
+        //所有
+        all: function(list) {
+          return list
+        },
+        //未完成
+        unfinished: function(list) {
+          //返回列表里面没有被选中的
+          return list.filter(item => {
+            return item.isChecked === false
+          })
+        },
+        //完成
+        finished: function(list) {
+          return list.filter(item => {
+            return item.isChecked === true
+          })
+        }
+      }
+
+      var vm = new Vue({
+        el: '#main',
+        data: {
+          list: list,
+          taskName: '',
+          num: '', //作为添加类名
+          beforeName: '', //保存编辑前的名称
+          status: 'all' //保存当前列表的状态
+        },
+        computed: {
+          unfinishNum: function() {
+            //返回列表里面没有被选中的数量
+            return this.list.filter(item => {
+              return item.isChecked === false
+            }).length
+          },
+          //根据状态筛选返回的列表
+          filterList: function() {
+            return filter[this.status] ? filter[this.status](list) : list
+          }
+        },
+        //监听list的变化
+        watch: {
+          list: {
+            handler: function() {
+              //往localStroage里面存数据
+              localStorage.setItem('customList', JSON.stringify(list)) || []
+            },
+            deep: true //深度监控
+          }
+        },
+        methods: {
+          //添加任务
+          addTask() {
+            this.list.unshift({
+              title: this.taskName,
+              isChecked: false
+            })
+            //清空输入框
+            this.taskName = ''
+          },
+          //删除任务
+          deleteTask(index) {
+            this.list.splice(index, 1)
+          },
+          //编辑任务
+          editTask(index) {
+            //点击编辑的时候让div隐藏，输入框显示
+            //找一个判断条件控制editing类名
+            this.num = index
+            this.beforeName = list[index].title
+          },
+          //编辑完成事件
+          editTodo() {
+            // 输入框隐藏 div显示
+            this.num = ''
+          },
+          //取消编辑
+          cancel(index) {
+            //输入框隐藏  div显示
+            this.num = ''
+            this.list[index].title = this.beforeName
+          }
+        },
+        //自定义指令
+        directives: {
+          focus: {
+            //当元素发生一些变化时执行的函数
+            updata: function(el) {
+              //执行聚焦
+              el.focus()
+            }
+            //使用时是在指令名称前加v-
+          }
+        }
+      })
+
+      //从地址栏中获取三种状态，all ， unfinished ， finished
+      function getHash() {
+        var status = window.location.hash.slice(1)
+        console.log(status)
+        vm.status = status
+      }
+      getHash()
+      //hashchange:hasn变化时事件
+      window.addEventListener('hashchange', getHash)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+Cli3.0
+1、创建项目
+vue create 项目名称
+项目名称英文，下划线，可以使用数字 比如 vue create vue_demo
+
+
+default: 默认
+manually: 手动去配置项目
+上下箭头选择配置，空格键切换选中状态
+
+Babel: es6转es5
+TypeScript:  TS语言 angular框架
+Progress……:
+Router: 路由
+Vuex: 集成式的状态
+Css:  预处理器 sass less
+Linter: 校验代码格式
+Unit test: 测试
+E2E test: 端对端测试
+In dedicated config files: 生成配置文件
+In package.json: 集成到package.json文件中
+package.json:对项目的描述
+
+npm run serve: 启动项目
+Vue-cli:搭建项目的脚手架，进行快速开发的完整系统
+官网 生态系统 ->vue/cli
+
+环境准备： 
+1.安装node.js
+	检查 node –v, npm –v
+2.淘宝镜像：npm?config?set?registry?https://registry.npm.taobao.org?
+
+3. 安装vue-cli3.0, 目的使用vue的命令
+	npm install  –g @vue/cli
+检查： vue  --version
+
+停止当前的运行 ： Ctrl+C> 确定要终止当前操作吗（Y/N）,确定终止的话 ：Y 回车
+
+npm install -g @vue/cli
+
+
+ $ cd vue-demo
+ $ npm run serve ：启动项目，进入项目文件夹
+	
+
+分析项目文件夹
+node_modules: 依赖模块
+Public: index.html根元素
+Src: 资源，写代码的地方 
+assets: 静态资源，图片，css文件等
+Components: 放项目的组件，组件命名都是以 .Vue结尾的
+什么是组件：页面上可复用的局部功能界面
+App.veu：它是一个根组件，所有components中的组件都会被他承载
+main.js：入口文件
+
+
+
+项目的运行流程
+index.html -->main.js-->
+index.html: id为app的根元素
+Main.js: 创建一个vue实例启动项目，挂载实例  render是渲染函数，用来渲染根组件，全局的文件都可以放在这里。
+
+Components:项目的所有子组件，命名都是以.vue结尾
+
+组件使用的步骤？
+.1.引入组件

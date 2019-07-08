@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li {
+            list-style: none;
+        }
+        .list li{
+            margin:3px 0;
+            color:#333;
+            line-height: 30px;
+            padding-left: 16px;
+            width: 270px;
+            box-sizing:border-box;
+            border-radius:14px;
+
+        }
+        .list li.active,.list li:hover{
+            color:#fff;
+            background: #fd635e;
+            cursor: pointer;
+        }
+        .searchIpt{
+            position: relative;
+            width: 336px;
+            border:1px solid #3736ae;
+            padding:5px;
+            border-radius:24px;
+            background: #e4e4fe;
+        }
+    </style>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div style="float:left ;margin-right: 50px;"> 
+            <h3>自定义下拉框1</h3>
+            <custom-select :btn="a"></custom-select>
+        </div>
+        <div style="float: left">
+             <h3>自定义下拉框2</h3>
+            <custom-select :btn="b"></custom-select>
+        </div>
+        
+    </div>
+    <script>
+        Vue.component("custom-select",{
+            props: ["btn"],
+            data:function(){
+                return {
+                    isShow:true
+                }
+            },
+            template: `
+                <section>
+                    <input type="text" value="" class="searchIpt">
+                    <input type="button" :value="btn">
+                  
+                    <ul class="list" v-show="isShow">
+                        <li>html+css</li>
+                        <li>html5+css3</li>
+                        <li>javascript</li>
+                        <li>angular</li>
+                        <li>react</li>
+                        <li>vue</li>
+                        <li>jquery</li>
+                        <li>nodejs</li>
+                    </ul>
+                </section>
+            `,
+           
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                message: "hello",
+                a: "搜索",
+                b: "查询"
+            }
+        })
+    </script>
+</body>
+</html>

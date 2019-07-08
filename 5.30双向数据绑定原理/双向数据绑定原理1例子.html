@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script scr="vue.js"></script>
+  </head>
+  <body>
+    <button id="btn">改变数据</button>
+    <h3 id="title"></h3>
+    <script>
+      var btn = document.getElementById('btn')
+      var title = document.getElementById('title')
+
+      var data = {
+        title: '新闻'
+      }
+      title.innerHTML = data.title
+      //使用数据之前先劫持数据，通过Object.defineProperty()方法劫持数据，转成getter/setter
+      Observer(data)
+
+      function Observer(obj) {
+        //劫持数据的函数
+        for (let attr in obj) {
+          //劫持的逻辑
+          defineReactive(obj, attr, obj[attr])
+        }
+      }
+      function defineReactive(obj, attr, value) {
+        Object.defineProperty(obj, attr, {
+          get() {
+            return value
+          },
+          set(newValue) {
+            value = newValue
+            title.innerHTML = data.title
+          }
+        })
+      }
+
+      btn.onclick = function() {
+        data.title = '娱乐'
+        //手动渲染
+        // title.innerHTML = data.title
+      }
+    </script>
+  </body>
+</html>

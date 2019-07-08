@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div style="float:left; margin-right:50px">
+        <h2>自定义下拉框1</h2>
+        <custom-select :btn="aBtn" :list="list1"></custom-select>
+      </div>
+      <div style="float:left; margin-right:50px">
+        <h2>自定义下拉框2</h2>
+        <custom-select :btn="bBtn" :list="list2"></custom-select>
+      </div>
+    </div>
+
+    <script>
+      //定义下拉框组件
+      Vue.component('custom-select', {
+        template: `
+			<div class="warp">
+				<div class="searchIpt">
+					<div class="clearFix">
+						<input type="text" @click="isShow=!isShow" :value="val"/>
+						<input type="button" :value="btn"/>
+						<span></span>
+
+					</div>	
+					<custom-list :list="list" v-show="isShow" @sendItem="receive"></custom-list>
+				</diV>	
+			</div>
+			`,
+        data() {
+          return {
+            isShow: false,
+            val: ''
+          }
+        },
+        methods: {
+          receive(item) {
+            this.val = item
+          }
+        },
+        props: {
+          btn: String,
+          list: Array
+        }
+      })
+      //定义一个列表组件
+      Vue.component('custom-list', {
+        template: `
+		        <ul class="list" >
+				    <li v-for="item in list" @click="send(item)">{{item}}</li>
+				</ul>
+		  `,
+        props: {
+          list: Array
+        },
+        methods: {
+          send(item) {
+            //自定义事件传值给父组件
+            this.$emit('sendItem', item)
+          }
+        }
+      })
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          list1: ['北京', '上海', '广东'],
+          list2: ['19-6-4', '19-6-3', '19-6-2'],
+          aBtn: '查询',
+          bBtn: '搜索'
+        }
+      })
+    </script>
+  </body>
+</html>

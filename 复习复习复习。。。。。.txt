@@ -1,0 +1,203 @@
+指令
+v-text:解析文本
+
+v-html:解析html元素
+
+v-bind:绑定属性   简写 :
+
+v-model:双向数据绑定，原来
+
+v-show:根据表达式的真假值控制显示与隐藏
+
+v-if:根据表达式的真假值控制显示与隐藏
+
+v-show 与 v-if区别
+v-show:切换css的display属性
+v-if:元素的添加与删除
+频繁切换v-show
+
+v-else-if:v-if的else-if块 必须要跟在if后面
+
+v-else:必须要跟在前两者之后
+
+v-for:遍厉数组或者对象
+ 语法:(item,index)in arr /(item,index)of arr
+
+v-on:简写 @绑定事件
+
+
+  事件修饰符：
+                    阻止默认事件: .prevent
+                     阻止冒泡： .stop
+	       回车键： .enter   13
+	       esc键：  .esc
+
+
+v-once:绑定事件只触发一次
+
+
+生命周期钩子
+8个
+分为三类
+初始化：beforeCreate   created     beforeMount    mounted(ajax发生请求)
+更新：beforeUpdate  updated
+销毁：beforeDestroy  destroyed
+
+
+双向数据绑定
+set 
+get
+
+
+组件，页面上可复 用的局部功能界面
+注册组件的方法：1.全局注册Vue.component("组件名称",{})
+  	                2.局部注册components:{组件名称：{}}
+
+父子组件通信： 父向子:父组件绑定自定义属性，子组件通过props接受
+	写法：props:["字符串"]
+	              props:[
+                                        message:String,
+                                       default:默认值，
+		required:true(是否必填)
+                                  ]
+	             子向父:子组件中使用 $emit("自定义事件名称"，值) 值可选
+	                   父组件监听自定义事件并且处理这个函数
+
+插槽
+<slot></slot> 要插入元素的slot属性值是slot元素的name属性值
+<div id="app">
+        <template slot="two">
+          <div>我是插槽2</div>
+        </template>
+ <div>
+                <div>                 
+                       <slot name="two"></slot>
+                        <slot name="one"></slot>
+                    </div>
+
+
+CLI2.0   vue  init  webpack 名称
+CLI3.0构建项目
+               vue  create 名称
+                vue ui
+
+
+  项目的运行流程
+index.html -->main.js-->App.vue-->其他子组件
+使用组件三部
+1.引入组件
+2.把组件映射成标签
+3.使用在html结构
+
+
+router管理者    route每条路由      routes集合
+
+路由
+#如何配置路由
+安装路由 npm install vue-router --save
+下载路由 npm install vue-router --save/npm i vue-router -s
+创建配置路由的文件router.js
+      1.引入vue 和 vue-router
+      2.声明使用插件Vue.use(Vue.Router)
+      3.引入相关组件
+      4.配置路由
+                Const router =[
+	{path:"/about",component: about,name:"名字"}
+	{path:"/home",component:home,name:"名字",children[{},{}]
+                    },
+	{
+	path:"/",
+                    redirect:"/home"
+	}
+                 ]
+       5.导出路由实例
+          export  default new VueRouter({
+	routers,
+                  mode:hash(默认)/history
+         })
+     
+      6.在main.js引入并且注入路由整个应用都可以使用路由
+
+
+路由传参三种方法1.params  2.query  3.router-view
+                                   params:占位符
+<router-link :to="{path:"aaa",params:{id:1,num:5}}"></router-link>
+		$router.params.id
+<router-link :to="{path:"aaa",query:{id:1,num:5}}"></router-link>
+	<span>{{$router.query.id}}</span>
+
+单页面应用理解：
+单页面应用：SPA:single page application,在vue中spa主要是通过路由来实现的，通过切换路由能实现组件之间的跳转，这种跳转是局部刷新,不像a标签那样刷新整个页面
+
+
+
+##路由模式？  
+ 默认的哈西模式   history模式
+
+mode: 'hash', //默认的哈西模式      http://www.baidu.com/#/abc
+ hash模式:#/abc.com =>这个就是hash部分
+ window.location.hash,
+ 通过改变#后面的hash值来显示不同的组件，不会每次都向后端发送请求
+  
+
+  mode: 'history' history模式：  缺点http://www.aaa.com
+  可以去掉hash模式的#号
+  http://www.aaa/com?id=1,url路径完全覆盖，需要后端去处理，报错404
+  
+
+
+##Vuex
+vuex实现原理？
+
+state:存放数据
+
+getters：类似于computed存放计算属性的
+
+actions：处理异步或者同步的函数，通过组件触发，this.$store.dispatch('自定义数据名称',值)
+
+mutations：只能处理同步代码，由actions触发，commit('自定义事件名称'，值)，通过组件this.$store.commit(‘自定义事件名称，值）
+
+module:模块，功能较大的项目可以建立多个store模块，每个模块都有自己的state、getters、motations、actions
+module:{
+     moduleA:{state,getters,motations,actions},
+      moduleB:{state,getters,motations,actions}
+ }
+
+辅助函数
+mapState
+mapGetters
+mapActions
+mapMutations
+   辅助函数：mapState  mapGetters   mapActions  mapMutations
+
+    1、mapState:映射state中的数据到this.data上，vuex的state、getters 使用辅助
+            函数映射过来要放在computed中。
+    写法：...mapState([]),映射的每一条数据都是字符串
+          ...mapState({传对象的时候能给映射的数据起别名
+              别名：箭头函数返回值就是别名，state作为参数的函数返回值
+          })
+
+    2.mapGetters：映射getters中的数据到this.data上   
+    写法: ...mapGetters([]),不需要起别名的时候数组作为参数，把要映射过来的数据作为数组中的字符串
+          ...mapGetters({}),需要起别名的时候对象作为参数，对象中的key是别名，value是原名，原名是字符串
+
+    3、mapActions,mapMutations:映射过来的函数到组件的methods中
+       mapActions:映射Actions中的函数到组件的methods上
+       写法：...mapActions([]),参数为数组的时候不能起别名函数名作为参数数组的每一项
+            ...mapActions({
+              key:value key是别名，value是原名 原名是字符串
+            })
+    
+    4.mapMutations:把mutations中的函数映射的methods中
+      写法: ...mapMutations([""]),参数为数组的时候不能起别名，数组里面的每一项都是函数名字符串
+            ...mapMutations({
+              key:value key是别名 ，value是原名
+            })
+*/
+
+//引入辅助函数,从同一个库中引入多个的时候使用大括号
+//大括号里面的没有顺序之分
+
+
+
+

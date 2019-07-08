@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .aClass {
+        color: red;
+        font-size: 30px;
+      }
+      .bClass {
+        color: blue;
+        font-size: 50px;
+      }
+    </style>
+    <script src="vue.js"></script>
+    <!-- 
+        v-bind:给元素绑定属性
+        语法：v-bind:属性名称=属性值
+        简写： :属性名称
+
+        v-bind:class,简写 :class
+        v-bind:style,简写　:style
+     -->
+  </head>
+  <body>
+    <div id="app">
+      <a :bind="link">百度</a>
+      <img :src="src" />
+      <!-- 绑定字符串 -->
+      <div :class="a">
+        今天周三
+      </div>
+      <!-- 绑定对象 -->
+      <p :class="{aClass:true,blass:false}">每天周四</p>
+      <p :class="{aClass:isA,bCalss:isB}">后天周五</p>
+      <span style="color:aqua; font-size: 20px;">哈哈哈哈</span>
+      <span :style="{color:'green',fontSize:30+'px'}">甩啦甩啦</span>
+      <span :style="{color:sColor,fontSize:n+'px'}">似懂非懂</span>
+      <button @click="toggle">变样子</button>
+    </div>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          link: 'https://www.hao123.com/',
+          src: 'img/照片.jpg',
+          a: 'aClass',
+          isA: true,
+          isB: false,
+          sColor: 'yellow',
+          n: 30
+        },
+        methods: {
+          toggle() {
+            if (this.a == 'bClass') {
+              this.a = 'aClass'
+            } else {
+              this.a = 'bClass'
+            }
+            this.isA = true
+            this.isB = false
+            this.sColor = 'brown'
+            this.n = 50
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

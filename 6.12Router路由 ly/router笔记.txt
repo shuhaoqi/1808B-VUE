@@ -1,0 +1,66 @@
+路由嵌套
+
+#什么是路由？
+是指向，路径指向组件，实现SPA(单页面应用)
+
+#如何配置路由
+1.安装路由 npm install vue-router --save
+
+npm run build:打包
+
+2.创建路由组件
+3.配置路由在js文件中，router.js
+	       a.引入vue和vue-router
+	       b.引入相关组件
+	       c.声明使用路由插件
+		Vue.use(VueRouter)
+	       d.配置router
+	       const router =[
+		{path:"/home",component:Home},
+		{}		
+	       ]
+                      e.创建路由实例并导出
+
+4.main.js中引入路由的实例，把路由注入到根实例中以便于整个项目都可以使用路由
+
+显示路由组件的标签：router-view,占位符
+操作路由的标签 router-link, router-link-active,to属性渲染成href属性
+
+
+路由嵌套 childone
+获取传参取值：$router.params \ $router.query.props
+##父子路由传参有三种方法
+#1.params
+home传一条数据给childone
+params在router-link中的写法是一个对象，因为可能传很多参数
+       1.)params又分两种方法
+	*1.传参不暴露在地址栏信息里面
+ 	      path: '/childOne/:num',
+	     <router-link :to="{name:'One',params:{num:123}}">params:占位符
+ 	<span>{{$router.params.num}}</span>
+	*2.传参暴露在地址栏中
+	    path: '/childOne/:num',
+	    router-link to="/childOne/333">
+	   <span>{{$router.params.num}}</span>
+#2.query
+    path: '/childOne',
+<router-link :to="{name:'Two',query:{id:888}}">
+ <span>{{$router.query.id}}</span>
+
+#3.router-view
+ data() {
+    return {
+      message: "hello"
+    };
+  }
+  <router-view :message="message"></router-view>
+export default {
+  props: {
+    message: String
+  }
+};
+
+
+#路由流程:
+点击router-link的时候,router-link身上有to,to属性值会去router.js中找到匹配的path值，
+path值对应的组件名称就是要显示出来的组件,最后通过router-view显示出来组件

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+    
+      form {
+        width: 410px;
+        height: 270px;
+        border: 5px red solid;
+      }
+      form div {
+        margin-bottom: 10px;
+      }
+    </style>
+    
+    <script src="vue.js"></script>
+    <!-- 
+        v-model: 给表单控件实例双向数据绑定
+        表单控件：文本框，密码框，单选框，复选框，文本域
+
+        v-model 会忽略所有表单元素的 value、checked、selected 特性的初始值，
+        将Vue实例的数据作为数据来源,所以要在vue实例的data里面初始化数据
+     -->
+  </head>
+  <body>
+    <div id="app">
+      <!-- action:提交地址 -->
+      <!-- @submit.prevent:阻止默认跳转 -->
+      <form action="xxx" @submit.prevent>
+        <div>
+          <label for="username">用户名:</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="请输入用户名"
+            v-model="username"
+          />
+        </div>
+        <div>
+          <label for="pwd">密码:</label>
+          <input type="password" placeholder="请输入密码" id="pwd" v-model="pwd" />
+        </div>
+        <div>
+          <span>性别：</span>
+          <label for="famel">男</label>
+          <input type="radio" id="famel" v-model="sex" value="男"/>
+          <label for="mael">女</label>
+          <input type="radio" id="mael" v-model="sex" value="女"/>
+        </div>
+        <div>
+          <span>爱好：</span>
+          <ladel for="foot">足球</ladel>
+          <input type="checkbox" id="foot" v-model="likes" value="足球"/>
+          <ladel for="basket">篮球</ladel>
+          <input type="checkbox" id="basket" v-model="likes" value="篮球"/>
+          <ladel for="tennis">乒乓球</ladel>
+          <input type="checkbox" id="tennis" v-model="likes" value="乒乓球"/>
+        </div>
+        <div>
+          <span>城市:</span>
+          <select  v-model="city">
+            <option value="">请选择</option>
+            <option value="北京">bj</option>
+            <option value="上海">sh</option>
+            <option value="深圳">sz</option>
+          </select>
+        </div>
+        <div>
+          <span>简介:</span>
+          <textarea v-model="desc"></textarea>
+        </div>
+        <input type="submit" value="注册" />
+  </form>
+    <script>
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          username: '', ///数据的初始化
+          pwd: '',
+          sex:"",
+          likes:[],
+          city:"",
+          desc:"请写下你的个人简介"
+        }
+      })
+    </script>
+  </body>
+</html>

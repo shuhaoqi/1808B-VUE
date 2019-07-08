@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <srcipt src="/vue.js"></srcipt>
+    <!-- <script>
+      // jquery: 库
+      // vue: 构建用户界面的渐进式框架
+
+      // 安装:三种方式
+      // 1.CDN
+      // <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+      // 2.下载到本地
+      // 3.cli构建
+      使用：Vue是一个构造函数，要实例化一个Vue实例,用来启动应用,构造函数接收一个配置对象，配置对象中有配置
+      参数（固定的）
+           配置参数：el:element 元素, 告诉vue实例管理的模板区域
+                    var vm =  new Vue()
+                    el: 选择器，选择器可以写id类，标签等 
+                    data: 数据,数据可能有很多，所以data也是一个对象,数据里面存的是key,value键值对的形式
+                    语法： 双大括号{{}}也叫小胡子语法
+                          指令:指令都是以v-开头
+                          v-for：遍力
+                          v-if：判断
+                          v-else:v-if的else块
+                          v-html:更新html
+                          v-text：解析文本的
+                          v-on:
+                          v-bind:
+                vue优点：
+                    1.尊循mvvm模式
+                    2.代码简洁，灵活，运行效率高
+                    3.不操作Dom,只关注数据     
+                mvvm模式 
+                   m:model,模型，数据       
+                   v:view,视图层，模板
+                   vm:ViewModel,视图模型层,中间桥梁,实例化vue的对象
+    </script> -->
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="message" />
+      <p>{{ message }}</p>
+    </div>
+
+    <script>
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          message: 'hello vue!',
+          name: '',
+          age: 0,
+          arr: [1, 2, 3],
+          obj: {
+            job: 'wed'
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

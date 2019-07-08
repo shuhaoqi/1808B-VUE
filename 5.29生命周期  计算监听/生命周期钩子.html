@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <!-- 
+        生命周期钩子：生命周期函数
+        生命： 出生 成长变化 死亡
+        定义：从vue实例创建、运行、销毁、期间伴随着各种各样的事件，这些事件，就叫做生命周期函数
+        生命周期钩子 = 生命周期事件 , 生命周期函数
+
+        分三类
+           1、初始化
+                beforeCreate:实例刚从内存中创建出来，此时还没有初始化data和methods属性，实例还没
+                有挂载到元素上。
+                created:数据，方法都已经初始化完成，但是实例没有被挂载到元素上。
+                beforeMount:实例已经挂载到模板上
+                mounted:所有初始化准备工作都完成，数据渲染了，实例挂载了
+           2、更新
+                beforeUpdate:只有实例上的数据更改的时候才会执行
+                udated:实例更新完毕以前执行此函数，此时data中的数据和界面上的数据同步都是最新的销
+                毁期间的生命周期函数
+           3、销毁
+                beforeDestroy:实例销毁之前调用这一步实例还可以正常使用
+                destroyed:实例销毁完成，vue实例上的所有使用东西都被移除
+     -->
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="message" /><br />
+      <span>{{ message }}</span>
+      <button @click="destroy">销毁</button>
+    </div>
+    <script>
+      // 挂载实例的方法：
+      // 1、配置对象的el参数中
+      // 2、通过实例的方法$mount()
+
+      //   常用的钩子：
+      //    beforeCreate
+      //    mounted
+      //    beforeDestroy
+
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          message: 'hello vue'
+        },
+        methods: {
+          destroy() {
+            // $destroy: 完全销毁一个实例的方法
+            this.$destroy()
+          }
+        },
+        beforeCreate: function() {
+          console.group('--------beforeCreate创建前状态--------')
+          console.log(this)
+          console.log('%c%s', 'color:green;', 'el:' + this.$el)
+          console.log('%c%s', 'color:red', 'data:' + this.$data)
+          console.log('%c%s', 'color:red;', 'message:' + this.message)
+        },
+        created: function() {
+          console.group('--------created创建完成状态--------')
+          console.log('%c%s', 'color:green;', 'el:' + this.$el)
+          console.log('%c%s', 'color:red', 'data:' + this.$data)
+          console.log('%c%s', 'color:red;', 'message:' + this.message)
+        },
+        beforeMount: function() {
+          console.group('--------beforeMount挂载前状态--------')
+          console.log('%c%s', 'color:green;', 'el:' + this.$el)
+          console.log('%c%s', 'color:red', 'data:' + this.$data)
+          console.log('%c%s', 'color:red;', 'message:' + this.message)
+        },
+        mounted: function() {
+          console.group('--------mounted挂载完成状态--------')
+          console.log('%c%s', 'color:green;', 'el:' + this.$el)
+          console.log('%c%s', 'color:red', 'data:' + this.$data)
+          console.log('%c%s', 'color:red;', 'message:' + this.message)
+        },
+        beforeUpdate: function() {
+          console.group('--------beforeUpdate更新前状态--------')
+          console.log('%c%s', 'color:green;', 'el:' + this.$el)
+          console.log('%c%s', 'color:red', 'data:' + this.$data)
+          console.log('%c%s', 'color:blue;', 'message:' + this.message)
+        },
+        updated: function() {
+          console.group('--------updated更新完成状态--------')
+          console.log('%c%s', 'color:green;', 'el:' + this.$el)
+          console.log('%c%s', 'color:red', 'data:' + this.$data)
+          console.log('%c%s', 'color:blue;', 'message:' + this.message)
+        },
+        beforeDestroy: function() {
+          console.log('实例被销毁了')
+          //   console.group('--------beforDestroy销毁前状态--------')
+          //   console.log('%c%s', 'color:green;', 'el:' + this.$el)
+          //   console.log('%c%s', 'color:red', 'data:' + this.$data)
+          //   console.log('%c%s', 'color:blue;', 'message:' + this.message)
+        },
+        destroyed: function() {
+          console.log('实例被销毁了')
+          //   console.group('--------destroyed销毁完成状态--------')
+          //   console.log('%c%s', 'color:green;', 'el:' + this.$el)
+          //   console.log('%c%s', 'color:red', 'data:' + this.$data)
+          //   console.log('%c%s', 'color:blue;', 'message:' + this.message)
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <!-- 
+        v-for:列表渲染指令，主要用来遍厉数组或者对象；
+            语法：参数 in object
+            参数：只写一个参数时，它是数组的每一项
+                 两个参数：数组的每一项.索引
+                 三个参数：一个参数：值，  item 
+                          二个参数：值 属性名， index 
+                          三个参数：值 名 索引， value
+        this:指向实例，数据都直接挂载到实例上                                                    
+     -->
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(item,index) in persons">
+          {{ index }}---{{ item.name }}---{{ item.age }}
+          <button @click="deleteitem(index)">删除</button>
+          <button @click="replaceitem(index,{name:'lili',age:16})">
+            替换
+          </button>
+        </li>
+      </ul>
+      <ul>
+        <li v-for="(item,index) in arr">{{ index }}---{{ item }}</li>
+      </ul>
+      <div v-for="(item,index,value) in obj">
+        {{ index }}---{{ item }}--{{ index }}
+      </div>
+    </div>
+    <script>
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          persons: [
+            { name: 'Jack', age: 18 },
+            { name: 'Rose', age: 20 },
+            { name: 'Anna', age: 22 }
+            //name:'lili',age:16,
+          ],
+          arr: ['apple', 'orange', 'banana'],
+          obj: {
+            name: 'leo',
+            age: 30,
+            obj: '工作',
+            city: 'bj'
+          }
+        },
+        methods: {
+          deleteitem(index) {
+            console.log(index)
+            //从数组里面删除点击的项
+            this.persons.splice(index, 1)
+          },
+          replaceitem(index, obj) {
+            this.persons.splice(index, 1, obj)
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

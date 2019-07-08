@@ -1,0 +1,91 @@
+vue状态的自管理
+state:驱动应用的数据源（数据data）
+view:页面视图,以声明的方式将数据从s tate渲染到页面
+action:执行用户的某种操作行为更新数据
+
+数据有两个阶段
+1.数据的初始化
+	state--->view
+2.数据更新
+	从view开始--->执行某个行为（action）,action接收到命令更新数据--->state来更新数据
+
+以上数据的流向是单向数据流
+
+
+一、什么是Vuex?
+vuex是管理状态的。
+
+二、什么时候用到vuex?
+项目庞大，多个组件共用某些数据，可以让vuex管理这些事件，当某个组件操作了数据导致数据变化、更新，其他组件也是同步更新的
+
+三、之前的做法
+通过把数据放在父组件中，然后各个组件需要的时候把数据传递过去
+vuex能帮助我们解决传值的问题
+
+四、
+   1、使用     安装
+           npm install vuex --save
+    2、配置vuex,  在store.js中配
+    3、
+        属性：
+         a、state,相当于data.管理数据如何在组件中获取？
+	$store.state下面获取 自己定义是名字
+         b、getters，相当于computed包含多个计算属性的属性对象	
+        	$store.getters.下面获取 自己定义是名字
+         c、actions
+	   actions:包含多个事件处理函数的对象，能处理同步或者异步的代码间接更新state,actions中的事件函数通过组件中触发，调用this.$store.dispatch(”自定义事件名称“)
+          d、 mutations
+            mutations:包含直接更新state方法的对象只能处理同步代码，异步代码只能放在actions中, mutactions由actions调用commit触发自定义 
+
+        方法:
+           dispatch(”自定义事件名称“)
+      1、//向stored的actions中分发事件
+          this.$store.dispatch("inCrement");
+      2、//向store的mutations中提交事件
+       this.$store.commit("deCrement");
+
+
+#mutations与actions
+  1.组件中使用this.$store.dispatch(自定义事件名称)向actions中提交，但是actions不能直接更新数据，所有actions向mutations中commit
+  2.组件中使用this.$store.commit(自定义事件名称)向mutations中提交更新数据
+
+  处理异步代码
+  组件中使用this.#store.dispatch(自定义事件名称)向actions中提交，但是actions不能直接更新数据，所以actions向mutations中commit
+   
+
+// 同步
+// commit--->mutations
+// 异步
+// dispatch--->actions
+
+ 
+   辅助函数：mapState  mapGetters   mapActions  mapMutations
+
+    1、mapState:映射state中的数据到this.data上，vuex的state、getters 使用辅助
+            函数映射过来要放在computed中。
+    写法：...mapState([]),映射的每一条数据都是字符串
+          ...mapState({传对象的时候能给映射的数据起别名
+              别名：箭头函数返回值就是别名，state作为参数的函数返回值
+          })
+
+    2.mapGetters：映射getters中的数据到this.data上   
+    写法: ...mapGetters([]),不需要起别名的时候数组作为参数，把要映射过来的数据作为数组中的字符串
+          ...mapGetters({}),需要起别名的时候对象作为参数，对象中的key是别名，value是原名，原名是字符串
+
+    3、mapActions,mapMutations:映射过来的函数到组件的methods中
+       mapActions:映射Actions中的函数到组件的methods上
+       写法：...mapActions([]),参数为数组的时候不能起别名函数名作为参数数组的每一项
+            ...mapActions({
+              key:value key是别名，value是原名 原名是字符串
+            })
+    
+    4.mapMutations:把mutations中的函数映射的methods中
+      写法: ...mapMutations([""]),参数为数组的时候不能起别名，数组里面的每一项都是函数名字符串
+            ...mapMutations({
+              key:value key是别名 ，value是原名
+            })
+*/
+
+//引入辅助函数,从同一个库中引入多个的时候使用大括号
+//大括号里面的没有顺序之分
+

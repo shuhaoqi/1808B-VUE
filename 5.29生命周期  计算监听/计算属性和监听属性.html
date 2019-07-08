@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <!-- 
+        *计算属性:computed,vue实例的属性对象,计算属性名称是函数名称，
+               属性值是函数的返回值，必须写return,使用{{}}把计算属性的值显示在里面
+        计算属性会被存入到缓存中，相比methods中的写法节省性能
+
+        计算属性什么时候执行？
+            在初始化和相关数据改变的时候会执行     
+            
+                   哦吃
+        *监听属性： watch,vue实例的属性对象
+            当属性发生变化时，回调函数自动调用，在函数内部计算
+     -->
+  </head>
+  <body>
+    <div id="app">
+      <p>{{ message }}</p>
+      <!--- <p>{{ reveseMessage }}</p>
+      <p>{{reveseMessage}}</p>
+      <p>{{reveseMessage}}</p>
+      <p>{{reveseMessage}}</p> -->
+      <!-- <button @click="rev">翻转字符串</button> -->
+
+      姓：<input type="text" v-model="firstName" /><br />
+      名：<input type="text" v-model="lastName" /><br />
+      全名1：<input type="text" v-model="fullName" /><br />
+      全名2：<input type="text" v-model="fullName2" /><br />
+    </div>
+    <script>
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          message: 'holle',
+          firstName: '',
+          lastName: '',
+          //fullName:""
+          fullName2: ''
+        },
+        computed: {
+          reveseMessage: function() {
+            return (this.message = this.message
+              .split('')
+              .reverse()
+              .join(''))
+          },
+          fullName: function() {
+            console.log('执行')
+            return this.firstName + ' ' + this.lastName
+          }
+        },
+        watch: {
+          //回调函数
+          firstName: function(newVal, oldVal) {
+            //newval:新值  oldval：旧值
+            this.fullName2 = newVal + '' + this.lastNname
+          },
+          lastName: function(value) {
+            this.funllName2 = this.firstName + '' + value
+          }
+        }
+        // methods: {
+        //   rev() {
+        //     console.log('执行了')
+        //     this.message = this.message
+        //       .split('')
+        //       .reverse()
+        //       .join('')
+        //   }
+        // }
+      })
+    </script>
+  </body>
+</html>

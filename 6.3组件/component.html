@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>组件</title>
+    <script src="vue.js"></script>
+    <!-- 
+        组件:在生活中组成某个物体的零件，零件组合起来形成完整的物体
+        前端：页面上可复用的局部功能界面，整个页面是组件一个容器，每个组件都有自己的逻辑
+             可复用的Vue实例
+
+        组件有什么要素？
+            html结构
+            css样式
+            逻辑、数据
+        组件的注册方式：1、全局注册 2、局部注册
+        1、全局注册：Vue.component("组件名称"，{})    
+            组件命名规则:1、驼峰命名法 (Canmd) 使用:小写分隔符
+                        2、短线命名法 /烤串命名法 (AAA-BBB) 使用:小写分隔符
+
+        如何使用组件:把组件名称当做一个自定义html元素   
+        
+        
+        2、局部组件：new Vue({})
+     -->
+  </head>
+  <body>
+    <div id="app">
+      <custom-component></custom-component>
+      <custom-component></custom-component>
+      <my-component></my-component>
+      <my-component></my-component>
+    </div>
+    <div id="app2">
+      <custom-component></custom-component>
+      <custom-component></custom-component>
+    </div>
+    <script>
+      //注册全局组件， newVue前边
+      Vue.component('custom-component', {
+        //data, methods, computed,除了el
+        template: `
+        <div>
+        <h1>第一个组件</h1>
+        <h3>{{title}}</h3>
+        <p>{{content}}</p>
+        </div>
+        `,
+        data() {
+          return {
+            title: '我是标题',
+            content: '我是内容'
+          }
+        }
+      })
+
+      var vm = new Vue({
+        el: '#app',
+        data: {},
+        components: {
+          //key(组件名称)  valu:{}
+          'my-component': {
+            template: `
+                    <div>
+                    <a href="javascript:;">点点</a>
+                    <child-component>子组件</child-component>
+                    </div>
+                `,
+            data() {
+              return {
+                message: 'hello '
+              }
+            },
+            components: {
+              'child-component': {
+                template: `
+                    <div>子组件</div>
+                    `
+              }
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

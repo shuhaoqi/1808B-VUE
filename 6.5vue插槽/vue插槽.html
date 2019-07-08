@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <!-- 
+        插槽：<slot></slot>元素
+        作用：默认情况下，在组件元素中写一些内容是不起作用的，在组件slot标签,组件元素中写的东西才生效
+
+        如果在组件标签中写内容，会显示组件标签中的内容，如果组件标签没写内容，会显示slot标签里面的内容
+        默认插槽
+
+        具名插槽：起名字插槽
+           给slot标签添加name属性，name的属性值作为slot属性的属性值,slot属性给要添加的标签
+     -->
+  </head>
+  <body>
+    <div id="app">
+      <custom-component>
+        <template slot="two">
+          <div>我是插槽2</div>
+        </template>
+
+        <template slot="one">
+          <div>我是插槽1</div>
+        </template>
+
+        <template slot="three">
+          <div>我是插槽3</div>
+        </template>
+
+        <div>我是无名插槽</div>
+      </custom-component>
+    </div>
+    <script>
+      Vue.component('custom-component', {
+        template: `
+                    <div>
+                        <p>{{message}}</p>
+                        <slot name="two"></slot>
+                        <slot name="one"></slot>
+                      
+                        <slot name="three"></slot>
+                        <slot></slot>
+                    </div>
+                `,
+        data() {
+          return {
+            message: 'hello'
+          }
+        }
+      })
+      var vm = new Vue({
+        el: '#app'
+      })
+    </script>
+  </body>
+</html>
+<script>
+  Vue.component('app-component', {
+    template: `
+        <div>
+            <span></span>
+            <p></P>
+            <solt name="one"></solt>
+            <solt name="two"></solt>
+            <solt name="three"></solt>
+            <solt name=></solt>
+            <ul>
+                <li v-for="item in list">{{item}}</li>
+            </ul>
+        </div>
+        `
+  })
+  var vm = new Vue({
+    el: '#app'
+  })
+</script>
